@@ -8,9 +8,9 @@ class TinyUrlProvider(BaseProvider):
     def get_shortlink(self, url : str) -> str:
         base_url = 'https://tinyurl.com/'
         endpoint = base_url + 'api-create.php'
-        params = {"url" : url}
+        payload = {"url" : url}
         try:
-            response = requests.post(endpoint, params, 5)
+            response = requests.post(url = endpoint, data = payload, timeout = 5)
             response.raise_for_status()
             return response.text
         except requests.exceptions.RequestException:
