@@ -15,7 +15,7 @@ class ShortyRequest:
     @cls.setter
     def cls(self, cls):
         if cls is None:
-            raise ValidationException('empty_cls', "'cls' is missing")
+            raise ValidationException('empty_cls_input', "'cls' is missing")
         if not UrlValidator.is_valid(cls):
             raise ValidationException('invalid_cls_input',"'cls' contains an invalid URL")
         self.__cls = cls
@@ -33,9 +33,3 @@ class ShortyRequest:
             if provider not in provider_names:
                 raise ValidationException('invalid_provider_input', f"'provider' expected to be one of {', '.join(provider_names)!r}")
         self.__provider = provider
-
-    def serialize(self):
-        return {
-            'cls': self.cls,
-            'provider': self.provider
-        }
