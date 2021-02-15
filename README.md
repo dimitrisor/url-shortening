@@ -1,7 +1,7 @@
 # Table of Contents
 ***
 1. [Technologies](#technologies)
-2. [Installation](#installation)
+2. [Run](#run)
 3. [Design](#design)
 4. [Future work](#future-work)
 5. [Time taken](#time-taken)
