@@ -27,8 +27,6 @@ def test_api_when_request_is_valid(post):
 )
 def test_api_when_request_payload_is_invalid(post, cls, provider, expected_status, expected_message):
     # GIVEN method parameters
-    cls = "http://www.example.com"
-    provider = "bitly"
     endpoint = '/shortlinks'
     # WHEN
     request_data = {"cls": cls, "provider": provider}
