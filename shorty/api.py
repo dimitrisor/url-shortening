@@ -24,3 +24,7 @@ def create_shortlink():
 @api.errorhandler(SystemException)
 def handle_exception(e):
     return jsonify({"message": e.get_message()}), e.get_status()
+
+@api.app_errorhandler(404)
+def resource_not_found(e):
+    return jsonify({"message": "The requested URL was not found on the server"}), e.code
