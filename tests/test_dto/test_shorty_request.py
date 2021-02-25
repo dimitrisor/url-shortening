@@ -18,7 +18,7 @@ def test_shorty_request_for_valid_input(cls, provider):
     # THEN
     assert shorty_request.cls == cls
     if provider is None:
-        assert shorty_request.provider == ShortyService.default_provider_name
+        assert shorty_request.provider == ShortyService.get_default_provider_name()
     else:
         assert shorty_request.provider == provider
 

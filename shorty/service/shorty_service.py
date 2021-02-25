@@ -4,8 +4,7 @@ from shorty.service.provider.bitly_provider import BitlyProvider
 from shorty.service.provider.tinyurl_provider import TinyUrlProvider
 
 class ShortyService:
-    default_provider_name = 'tinyurl'
-    providers = { "tinyurl":TinyUrlProvider, "bitly":BitlyProvider, "bitlyclone":BitlyCloneProvider}
+    provider_map = { "tinyurl":TinyUrlProvider, "bitly":BitlyProvider, "bitlyclone":BitlyCloneProvider}
 
     @classmethod
     def get_provider_chain(cls, selected_name: str) -> Provider:
@@ -19,8 +18,8 @@ class ShortyService:
 
     @classmethod
     def get_provider_names(cls) -> list:
-        return cls.providers.keys()
+        return cls.provider_map.keys()
 
     @classmethod
     def get_default_provider_name(cls) -> str:
-        return cls.default_provider_name
+        return list(cls.provider_map.keys())[0]
