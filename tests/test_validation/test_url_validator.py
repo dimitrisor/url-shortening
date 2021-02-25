@@ -2,7 +2,7 @@ import pytest
 from shorty.validation.url_validator import UrlValidator
 
 @pytest.mark.parametrize("url", ['', None])
-def test_url_validator_WHEN_missing_or_empty_value(url):
+def test_url_validator_when_missing_or_empty_value(url):
     # GIVEN 'url' method parameter
     # WHEN
     is_valid = UrlValidator.is_valid(url)
@@ -10,14 +10,14 @@ def test_url_validator_WHEN_missing_or_empty_value(url):
     assert not is_valid
 
 @pytest.mark.parametrize("url", ['invalid://www.example.com', '://www.example.com', 'http:/www.example.com', 'www.example.com'])
-def test_url_validator_WHEN_invalid_protocol(url):
+def test_url_validator_when_invalid_protocol(url):
     # GIVEN 'url' method parameter
     # WHEN
     is_valid = UrlValidator.is_valid(url)
     # THEN
     assert not is_valid
 
-def test_url_validator_WHEN_missing_domain():
+def test_url_validator_when_missing_domain():
     # GIVEN
     url = "https://.com"
     # WHEN
@@ -25,7 +25,7 @@ def test_url_validator_WHEN_missing_domain():
     # THEN
     assert not is_valid
 
-def test_url_validator_WHEN_missing_domain_extension():
+def test_url_validator_when_missing_domain_extension():
     # GIVEN
     url = "https://example."
     # WHEN
@@ -33,7 +33,7 @@ def test_url_validator_WHEN_missing_domain_extension():
     # THEN
     assert not is_valid
 
-def test_url_validator_WHEN_invalid_format():
+def test_url_validator_when_invalid_format():
     # GIVEN
     url = "https://www. example.com"
     # WHEN
@@ -41,7 +41,7 @@ def test_url_validator_WHEN_invalid_format():
     # THEN
     assert not is_valid
 
-def test_url_validator_WHEN_email_is_number():
+def test_url_validator_when_email_is_number():
     # GIVEN
     url = 123
     # WHEN
@@ -59,7 +59,7 @@ def test_url_validator_WHEN_email_is_number():
         'https://example.com/search?url_parma1=parma1&url_parma2=param2'
     ]
 )
-def test_url_validator_WHEN_email_is_valid(url):
+def test_url_validator_when_email_is_valid(url):
     # GIVEN 'url' method parameter
     # WHEN
     is_valid = UrlValidator.is_valid(url)

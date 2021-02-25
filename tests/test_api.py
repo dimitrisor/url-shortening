@@ -1,13 +1,15 @@
 import pytest
 from http import HTTPStatus
+from shorty.service.shorty_service import ShortyService
 
 def test_api_when_request_is_valid(post):
     # GIVEN
     cls = "http://www.example.com"
     provider = "bitly"
+    endpoint = '/shortlinks'
     # WHEN
-    request_data = {"cls":cls, "provider":provider}
-    response = post('/shortlinks',data=request_data)
+    request_data = {"cls": cls, "provider": provider}
+    response = post(endpoint, data=request_data)
 
     # THEN
     response_data = response.get_json()
@@ -19,14 +21,18 @@ def test_api_when_request_is_valid(post):
     "post, cls, provider, expected_status, expected_message",[
         ("post", '://www.example.com', 'bitly', HTTPStatus.UNPROCESSABLE_ENTITY, "'cls' contains an invalid URL"),
         ("post", None, 'bitly', HTTPStatus.UNPROCESSABLE_ENTITY, "'cls' is missing"),
-        ("post", "https://www.example.com", 'another provider', HTTPStatus.UNPROCESSABLE_ENTITY, "'provider' expected to be one of 'tinyurl, bitly'")
+        ("post", "https://www.example.com", 'another provider', HTTPStatus.UNPROCESSABLE_ENTITY,
+         f"'provider' expected to be one of {', '.join(ShortyService.get_provider_names())!r}")
     ], indirect=["post"]
 )
-def test_api_when_request_is_invalid(post, cls, provider, expected_status, expected_message):
+def test_api_when_request_payload_is_invalid(post, cls, provider, expected_status, expected_message):
     # GIVEN method parameters
+    cls = "http://www.example.com"
+    provider = "bitly"
+    endpoint = '/shortlinks'
     # WHEN
-    request_data = {"cls":cls, "provider":provider}
-    response = post('/shortlinks',data=request_data)
+    request_data = {"cls": cls, "provider": provider}
+    response = post(endpoint, data=request_data)
 
     # THEN
     response_data = response.get_json()
