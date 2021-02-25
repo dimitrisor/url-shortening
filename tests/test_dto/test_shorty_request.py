@@ -26,7 +26,7 @@ def test_shorty_request_for_valid_input(cls, provider):
     "cls, provider, expected_ex_code, expected_ex_message, expected_ex_status",[
         ('://www.example.com', 'bitly', 'invalid_cls_input', "'cls' contains an invalid URL", HTTPStatus.UNPROCESSABLE_ENTITY),
         (None, 'bitly', 'empty_cls_input', "'cls' is missing", HTTPStatus.UNPROCESSABLE_ENTITY),
-        ("https://www.example.com", 'not_available_provider', 'invalid_provider_input', "'provider' expected to be one of 'tinyurl, bitly'", HTTPStatus.UNPROCESSABLE_ENTITY)
+        ("https://www.example.com", 'not_available_provider', 'invalid_provider_name', f"'provider' expected to be one of {', '.join(ShortyService.get_provider_names())!r}", HTTPStatus.UNPROCESSABLE_ENTITY)
     ]
 )
 def test_shorty_request_for_invalid_cls_input(cls, provider, expected_ex_code, expected_ex_message, expected_ex_status):

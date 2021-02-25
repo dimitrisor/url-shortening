@@ -31,5 +31,5 @@ class ShortyRequest:
         else:
             provider, provider_names = provider.lower(), ShortyService.get_provider_names()
             if provider not in provider_names:
-                raise ValidationException('invalid_provider_input', f"'provider' expected to be one of {', '.join(provider_names)!r}")
+                raise ValidationException('invalid_provider_name', f"'provider' expected to be one of {', '.join(provider_names)!r}")
         self.__provider = provider
