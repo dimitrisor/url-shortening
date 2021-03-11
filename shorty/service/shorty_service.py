@@ -1,0 +1,34 @@
+from flask import current_app
+from shorty.exception.validation_exception import ValidationException
+from shorty.service.provider.bitly_clone_provider import BitlyCloneProvider
+from shorty.service.provider.provider import Provider
+from shorty.service.provider.bitly_provider import BitlyProvider
+from shorty.service.provider.tinyurl_provider import TinyUrlProvider
+
+class ShortyService:
+    provider_map = { "tinyurl":TinyUrlProvider, "bitly":BitlyProvider, "bitlyclone":BitlyCloneProvider}
+
+    @classmethod
+    def get_provider_chain(cls, selected_provider_name=None) -> Provider:
+        if selected_provider_name is None:
+            selected_provider_name = cls.get_default_provider_name()
+        try:
+            selected_provider_cls = cls.provider_map[selected_provider_name]
+        except:
+            current_app.logger.error('Invalid requested provider name')
+            raise ValidationException('invalid_provider_name', f"'provider' expected to be one of {', '.join(cls.provider_map.keys())!r}")
+        selected_provider = selected_provider_cls()
+        provider_chain = selected_provider
+        for provider_name, provider_cls in cls.provider_map.items():
+            if provider_name != selected_provider_name:
+                next_provider_cls = provider_cls
+                selected_provider = selected_provider.set_next(next_provider_cls())
+        return provider_chain
+
+    @classmethod
+    def get_provider_names(cls) -> list:
+        return cls.provider_map.keys()
+
+    @classmethod
+    def get_default_provider_name(cls) -> str:
+        return list(cls.provider_map.keys())[0]
