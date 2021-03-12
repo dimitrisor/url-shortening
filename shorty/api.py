@@ -14,12 +14,12 @@ def create_shortlink():
     except Exception:
         raise SystemException(HTTPStatus.BAD_REQUEST, 'invalid_body')
 
-    data = ShortyRequest(request_data.get('cls'), request_data.get('provider'))
+    data = ShortyRequest(request_data.get('url'), request_data.get('provider'))
 
     provider_chain = service.get_provider_chain(data.provider)
-    link = provider_chain.get_shortlink(data.cls)
+    link = provider_chain.get_shortlink(data.url)
 
-    return jsonify({'cls': data.cls,'link': link}), HTTPStatus.OK
+    return jsonify({'url': data.url,'link': link}), HTTPStatus.OK
 
 @api.errorhandler(SystemException)
 def handle_exception(e):
