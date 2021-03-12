@@ -4,21 +4,21 @@ from shorty.validation.url_validator import UrlValidator
 
 class ShortyRequest:
 
-    def __init__(self, cls, provider):
-        self.cls = cls
+    def __init__(self, url, provider):
+        self.url = url
         self.provider = provider
 
     @property
-    def cls(self):
-        return self.__cls
+    def url(self):
+        return self.__url
 
-    @cls.setter
-    def cls(self, cls):
-        if cls is None:
-            raise ValidationException('empty_cls_input', "'cls' is missing")
-        if not UrlValidator.is_valid(cls):
-            raise ValidationException('invalid_cls_input',"'cls' contains an invalid URL")
-        self.__cls = cls
+    @url.setter
+    def url(self, url):
+        if url is None:
+            raise ValidationException('empty_url_input', "'url' is missing")
+        if not UrlValidator.is_valid(url):
+            raise ValidationException('invalid_url_input',"'url' contains an invalid URL")
+        self.__url = url
 
     @property
     def provider(self):

@@ -13,16 +13,16 @@ class ShortyService:
         if selected_provider_name is None:
             selected_provider_name = cls.get_default_provider_name()
         try:
-            selected_provider_cls = cls.provider_map[selected_provider_name]
+            selected_provider_url = cls.provider_map[selected_provider_name]
         except:
             current_app.logger.error('Invalid requested provider name')
             raise ValidationException('invalid_provider_name', f"'provider' expected to be one of {', '.join(cls.provider_map.keys())!r}")
-        selected_provider = selected_provider_cls()
+        selected_provider = selected_provider_url()
         provider_chain = selected_provider
-        for provider_name, provider_cls in cls.provider_map.items():
+        for provider_name, provider_url in cls.provider_map.items():
             if provider_name != selected_provider_name:
-                next_provider_cls = provider_cls
-                selected_provider = selected_provider.set_next(next_provider_cls())
+                next_provider_url = provider_url
+                selected_provider = selected_provider.set_next(next_provider_url())
         return provider_chain
 
     @classmethod
