@@ -18,7 +18,7 @@ def test_system_exception_properties_when_message_is_not_passed():
     # GIVEN
     status = HTTPStatus.SERVICE_UNAVAILABLE
     code = 'no_available_provider'
-    default_message = "Please provide a valid JSON body with 'cls' and 'provider' parameters"
+    default_message = "Please provide a valid JSON body with 'url' and 'provider' parameters"
     # WHEN
     exception = SystemException(status, code)
     # THEN

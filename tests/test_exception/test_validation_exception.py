@@ -3,8 +3,8 @@ from shorty.exception.validation_exception import ValidationException
 
 def test_validation_exception_get_status_code_message():
     # GIVEN
-    code = 'empty_cls'
-    message = "'cls' is missing"
+    code = 'empty_url'
+    message = "'url' is missing"
     # WHEN
     exception = ValidationException(code, message)
     # THEN

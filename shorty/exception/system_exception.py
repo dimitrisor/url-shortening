@@ -1,4 +1,4 @@
-INVALID_BODY_MESSAGE = "Please provide a valid JSON body with 'cls' and 'provider' parameters"
+INVALID_BODY_MESSAGE = "Please provide a valid JSON body with 'url' and 'provider' parameters"
 class SystemException(Exception):
 
     def __init__(self, status: int, code: str, message=INVALID_BODY_MESSAGE):
