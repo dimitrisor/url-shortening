@@ -4,15 +4,18 @@ import requests
 from shorty.service.provider.base_provider import BaseProvider
 
 NAME = "bitlyclone"
-GROUP_ID = "Bl2b0UoNj6L"
-AUTH_TOKEN = "63f57a37995caf0310c95801e1901af91433541b"
 class BitlyCloneProvider(BaseProvider):
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.group_id = current_app.config['BITLY_GROUP_ID']
+        self.auth_token = current_app.config['BITLY_AUTH_TOKEN']
 
     def get_shortlink(self, url: str) -> str:
         base_url = 'https://api-ssl.bitly.com/v4/'
         endpoint = base_url + 'shorten'
-        payload = {"group_guid" : GROUP_ID, "domain" : "bit.ly", "long_url" : url}
-        headers = {"Authorization" : "Bearer " + AUTH_TOKEN, "Content-Type" : "application/json"}
+        payload = {"group_guid" : self.group_id, "domain" : "bit.ly", "long_url" : url}
+        headers = {"Authorization" : "Bearer " + self.auth_token, "Content-Type" : "application/json"}
 
         try:
             response = requests.post(url = endpoint, data = json.dumps(payload), headers = headers, timeout = 5)
