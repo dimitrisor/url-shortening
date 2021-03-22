@@ -8,7 +8,6 @@
 3. [Run](#run)
 4. [Usage](#usage)
 5. [Future work](#future-work)
-6. [Time taken](#time-taken)
 ***
 # Technologies
 ### List of technologies used within the project:
@@ -21,16 +20,14 @@
 The service implements the "Chain of responsibility" behavioral pattern, supporting a fallback strategy in case of providers' failure
 ***
 # Run
-### To run the application using *Venv*, the following steps must be performed:
-1. `$python3 -m venv venv`
-2. `$source venv/bin/activate`
-3. `$pip3 install -r requirements.txt`
-4. `$python3 ./run.py`
-### To run the application using *Docker*, just excecute the following:
-`$bash start.sh`
+First, fill-in the required environment variables in the "***.env***" file.
+### To run the application using *Venv*
+`$bash start_venv.sh`
+### To run the application using *Docker*
+`$bash start_docker.sh`
 ***
 # Usage
-Request
+### ***Request***
 
 "Shorty" can be accessed through a single `Post /shortlinks` endpoint that accepts a JSON payload, following the requirements below:
 | param    | type   | required | description                        |
@@ -52,7 +49,7 @@ or
 }
 ```
 
-Response
+### ***Response***
 
 For **Valid** requests, the response should look like:
 
