@@ -8,27 +8,28 @@ from shorty.service.provider.tinyurl_provider import TinyUrlProvider
 class ShortyService:
     provider_map = { "tinyurl":TinyUrlProvider, "bitly":BitlyProvider, "bitlyclone":BitlyCloneProvider}
 
-    @classmethod
-    def get_provider_chain(cls, selected_provider_name=None) -> Provider:
+    def get_provider_chain(self, selected_provider_name=None) -> Provider:
         if selected_provider_name is None:
-            selected_provider_name = cls.get_default_provider_name()
+            selected_provider_name = self.get_default_provider_name()
+
         try:
-            selected_provider_url = cls.provider_map[selected_provider_name]
+            selected_provider_cls = self.provider_map[selected_provider_name]
         except:
             current_app.logger.error('Invalid requested provider name')
-            raise ValidationException('invalid_provider_name', f"'provider' expected to be one of {', '.join(cls.provider_map.keys())!r}")
-        selected_provider = selected_provider_url()
+            raise ValidationException('invalid_provider_name', f"'provider' expected to be one of {', '.join(self.provider_map.keys())!r}")
+
+        selected_provider = selected_provider_cls()
         provider_chain = selected_provider
-        for provider_name, provider_url in cls.provider_map.items():
-            if provider_name != selected_provider_name:
-                next_provider_url = provider_url
-                selected_provider = selected_provider.set_next(next_provider_url())
+
+        for p_name, p_cls in self.provider_map.items():
+            if p_name != selected_provider_name:
+                selected_provider = selected_provider.set_next(p_cls())
         return provider_chain
 
     @classmethod
     def get_provider_names(cls) -> list:
-        return cls.provider_map.keys()
+        return list(cls.provider_map.keys())
 
     @classmethod
     def get_default_provider_name(cls) -> str:
-        return list(cls.provider_map.keys())[0]
+        return cls.get_provider_names()[0]

@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from flask import Blueprint, request, jsonify
-from shorty.service.shorty_service import ShortyService as service
+from shorty.service.shorty_service import ShortyService
 from shorty.dto.shorty_request import ShortyRequest
 from shorty.exception.system_exception import SystemException
 
@@ -15,9 +15,7 @@ def create_shortlink():
         raise SystemException(HTTPStatus.BAD_REQUEST, 'invalid_body')
 
     data = ShortyRequest(request_data.get('url'), request_data.get('provider'))
-
-    provider_chain = service.get_provider_chain(data.provider)
-    link = provider_chain.get_shortlink(data.url)
+    link = ShortyService().get_provider_chain(data.provider).get_shortlink(data.url)
 
     return jsonify({'url': data.url,'link': link}), HTTPStatus.OK
 
